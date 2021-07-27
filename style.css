@@ -55,7 +55,7 @@ main .wrapper {
     flex-wrap: wrap;
 }
 main .wrapper .card {
-    width: 300px;
+    width: 320px;
     height: auto;
     background: white;
     padding: 15px;
