@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+    <header>
+        <div class="wrapper">
+            <div class="header-icon"></div>
+            <div class="header-text">Messages</div>
+        </div>
+    </header>
+
+    <main>
+        <div class="wrapper" id="main_wrapper">
+            
+
+
+        </div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        $x1 = 0;
+        $x2 = 0;
+        $x3 = 0;
+        $parentEl = "";
+        function touchEventStart(e) {
+            $parentEl = e.target.closest(".card");
+            $x1 = e.touches[0].clientX;
+            $x2 = 0;
+        }
+        function touchEventMove(e) {
+            $x2 = e.touches[0].clientX;
+        }
+        function touchEventEnd(e) {
+            $x3 = $x1 - $x2;
+            if($x3 > 200) {
+                if($($parentEl).find(".card-right").hasClass("displayNone")) {
+                    $($parentEl).find(".card-right").removeClass("displayNone");
+                    $($parentEl).find(".card-left").addClass("displayNone");
+                }
+                else {
+                    $($parentEl).find(".card-right").addClass("displayNone");
+                }
+            }
+            else if($x3 < 200 && $x3 > -125) {
+                $($parentEl).find(".card-right").addClass("displayNone");
+                $($parentEl).find(".card-left").addClass("displayNone");
+            }
+            else if($x3 < -125) {
+                if($($parentEl).find(".card-left").hasClass("displayNone")) {
+                    $($parentEl).find(".card-left").removeClass("displayNone");
+                    $($parentEl).find(".card-right").addClass("displayNone");
+                }
+                else {
+                    $($parentEl).find(".card-left").addClass("displayNone");
+                }
+            }
+            // else {
+            //     $($parentEl).find(".card-right").addClass("displayNone");
+            //     $($parentEl).find(".card-left").addClass("displayNone");
+            // }
+        }
+
+
+        $(document).ready(function() {
+
+            $dataNextToken = "";
+
+            function timeAgo($date) {
+                $tmpDate = $date.split("T")[0].split("-").join("/");
+
+                // 1996/05/20
+                var years = new Date(new Date() - new Date($tmpDate)).getFullYear() - 1970;
+                return years+" years"+" ago";
+            }
+
+
+            function loadCard($data) {
+                $output = `<div class="card" data_cardID="${$data.id}">
+                                <div class="card-left displayNone">
+                                    <button class="btnCard" id="delete_card"> <span> Delete </span> <i></i></button>
+                                </div>
+                                <div class="card-center" ontouchstart="touchEventStart(event)" ontouchmove="touchEventMove(event)" ontouchend="touchEventEnd(event)">
+                                    <div class="card-header">
+                                        <div class="card-img-wrapper">
+                                            <img src="https://message-list.appspot.com/${$data.author.photoUrl}" alt="${$data.author.name}" class="card-img">
+                                        </div>
+                                        <div class="card-text-wrapper">
+                                            <div class="card-title">${$data.author.name}</div>
+                                            <div class="card-log">${timeAgo($data.updated)}</div>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="card-text">${$data.content}</div>
+                                    </div>
+                                </div>
+                                <div class="card-right displayNone">
+                                    <button class="btnCard" id="edit_card"> <span> Edit </span> <i></i></button>
+                                </div>
+                            </div>`;
+
+                $("#main_wrapper").append($output);
+            }
+
+
+            $.ajax({
+                url: "https://message-list.appspot.com/messages",
+                type: "GET",
+                dataType: "JSON",
+                success: function(data) {
+                    $dataCount = data.count;
+                    $dataMes = data.messages;
+                    $dataNextToken = data.pageToken;
+                    
+                    $dataMes.forEach(mes => {
+                        loadCard(mes);
+                    });
+                }
+            })
+
+            $(window).scroll(function() {
+                if($(window).scrollTop() == $(document).height() - $(window).height()) {
+
+                    $.ajax({
+                        url: "https://message-list.appspot.com/messages?pageToken="+$dataNextToken+"",
+                        type: "GET",
+                        dataType: "JSON",
+                        success: function(data) {
+                            $dataCount = data.count;
+                            $dataMes = data.messages;
+                            $dataNextToken = data.pageToken;
+                            
+                            $dataMes.forEach(mes => {
+                                loadCard(mes);
+                            });
+                        }
+                    })
+
+                }
+            });
+
+
+            $(document).on("click", "#delete_card", function() {
+
+                $(this).closest(".card").fadeOut("slow");
+            });
+
+            $(document).on("click", "#edit_card", function() {
+
+                $(this).closest(".card").find(".card-text").attr("contenteditable", true);
+            });
+
+        });
+    </script>
+    
+</body>
+</html>

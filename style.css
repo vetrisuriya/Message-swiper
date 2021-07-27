@@ -1,0 +1,211 @@
+html {
+    scroll-behavior: smooth;
+}
+body {
+    padding: 0px;
+    margin: 0px;
+    box-sizing: border-box;
+    font-family: sans-serif;
+    background: #f5f4f6;
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    background: #6234ee;
+    box-shadow: 0px 0px 8px 3px grey;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 25px;
+    box-sizing: border-box;
+    color: white;
+    z-index: 1;
+    border-bottom: 1px solid #4a2ba9;
+}
+header .wrapper {
+}
+header .wrapper .header-icon {
+
+}
+header .wrapper .header-text {
+    letter-spacing: .5px;
+}
+
+main {
+    min-height: calc(100vh - 50px);
+    height: auto;
+    position: relative;
+    margin-top: 51px;
+    z-index: 0;
+}
+main .wrapper {
+    width: 100%;
+    padding: 30px 25px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    column-gap: 15px;
+    row-gap: 20px;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+main .wrapper .card {
+    width: 300px;
+    height: auto;
+    background: white;
+    padding: 15px;
+    box-sizing: border-box;
+    box-shadow: 0px 1.5px 2px 0px #a5a4a5;
+    display: flex;
+    flex-direction: row;
+    column-gap: 5px;
+}
+main .wrapper .card .card-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 38px;
+    height: 100%;
+}
+main .wrapper .card .card-left .btnCard {
+    width: 100%;
+    height: 100%;
+    background: #ff3500;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+    outline: none;
+    border: 0;
+}
+main .wrapper .card .card-left .btnCard span {
+    transform: rotate(-90deg);
+    font-size: 14px;
+    letter-spacing: .2px;
+    margin-bottom: 22px;
+}
+main .wrapper .card .card-left .btnCard i {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    margin-bottom: -20px;
+}
+main .wrapper .card .card-left .btnCard i::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    background: url(./trash.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+}
+main .wrapper .card .card-right {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 38px;
+    height: 100%;
+}
+main .wrapper .card .card-right .btnCard {
+    width: 100%;
+    height: 100%;
+    background: #6234ee;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    cursor: pointer;
+    outline: none;
+    border: 0;
+}
+main .wrapper .card .card-right .btnCard span {
+    transform: rotate(90deg);
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+}
+main .wrapper .card .card-right .btnCard i {
+    position: relative;
+    width: 20px;
+    height: 20px;
+    margin-bottom: -20px;
+}
+main .wrapper .card .card-right .btnCard i::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    background: url(./trash.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100%;
+}
+main .wrapper .card .card-header {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    column-gap: 10px;
+}
+main .wrapper .card .card-header .card-img-wrapper {
+    width: 50px;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+main .wrapper .card .card-header .card-img-wrapper img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+main .wrapper .card .card-header .card-text-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    row-gap: 5px;
+}
+main .wrapper .card .card-header .card-text-wrapper .card-title {
+    font-size: 14px;
+    font-weight: bold;
+}
+main .wrapper .card .card-header .card-text-wrapper .card-log {
+    font-size: 11px;
+    color: #8d8d8d;
+}
+main .wrapper .card .card-body {
+    height: auto;
+}
+main .wrapper .card .card-body .card-text {
+    padding: 10px;
+    font-size: 13px;
+    line-height: 17px;
+}
+.displayNone {
+    display: none !important;
+}
+
+@media (max-width: 400px) {
+    main .wrapper {
+        row-gap: 12px;
+    }
+}
